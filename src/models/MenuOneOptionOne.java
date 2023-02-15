@@ -1,5 +1,7 @@
 package models;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +12,7 @@ import api.ApiCalls;
 public class MenuOneOptionOne extends MenuItem {
 	private HashMap<String, String> options;
 	private ArrayList<String> extraOptions;
+
 
 	public MenuOneOptionOne() {
 		this.options = new HashMap<String, String>();
@@ -33,10 +36,12 @@ public class MenuOneOptionOne extends MenuItem {
 		this.setTitle("Αναζήτηση τόμων με βάση ειδικά κριτήρια");
 	}
 
+
 	@Override
-	public void userQuestions(Scanner scan) {
+	public String userQuestions(Scanner scan) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Παρακαλώ εισάγετε τον τόμο που ψάχνετε: ");
-		String searchTerm = scan.next();
+		String searchTerm = br.readLine();
 		String extraOption = "";
 		String extraSearchTerm = "";
 		System.out.println("Θέλετε κάποιο επιπλέον κριτήριο αναζήτησης ?");
@@ -44,6 +49,7 @@ public class MenuOneOptionOne extends MenuItem {
 		System.out.println("2. Οχι");
 		String extraOptionChoise = scan.next();
 		boolean extraOptionNeeded = extraOptionChoise.equals("1");
+		String extraOptionTitle = "";
 		if (extraOptionNeeded) {
 			System.out.println("\tΠαρακαλώ επιλέξτε το επιπλέον κριτήριο: \n");
 			for (int i = 0; i < this.extraOptions.size(); i++) {
@@ -51,9 +57,17 @@ public class MenuOneOptionOne extends MenuItem {
 			}
 			String extraOptionParameterChoise = scan.next();
 			extraOption = this.options.get(extraOptionParameterChoise);
+			extraOptionTitle = this.extraOptions.get(Integer.parseInt(extraOptionChoise) - 1);
 			System.out.println("Παρακαλώ εισάγετε την λέξη αναζήτησης βάση του παραπάνω κριτηρίου:");
-			extraSearchTerm = scan.next();
+			extraSearchTerm = scan.nextLine();
 		}
+		//
+		String searchTermForInternalStorage = searchTerm;
+		if(extraOptionNeeded) {
+			searchTermForInternalStorage = MessageFormat.format("{0} | {1}: {2}", searchTermForInternalStorage,
+					extraOptionTitle, extraSearchTerm);
+		}
+	
 		ApiCalls api = new ApiCalls();
 		try {
 			Volumes volumes = api.GetVolumes(searchTerm, extraOption, extraSearchTerm);
@@ -62,10 +76,12 @@ public class MenuOneOptionOne extends MenuItem {
 				System.out.println(item.toString());
 				System.out.println();
 			});
+			return searchTermForInternalStorage;
 		} catch (Exception e) {
-
-
+			System.out.println(e.getStackTrace());
+			throw new Exception(e.getMessage());
 		}
-
+		
 	}
+
 }

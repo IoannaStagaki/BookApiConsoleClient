@@ -1,5 +1,7 @@
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 import models.Menu;
@@ -12,6 +14,16 @@ import models.MenuTwoOptionThree;
 import models.MenuTwoOptionTwo;
 
 public class Main {
+	private static Queue<String> LastFiveSearches = new LinkedList<String>();
+
+	private static void addLocalStorage(String term) {
+		if (LastFiveSearches.size() == 5) {
+			LastFiveSearches.poll();
+			LastFiveSearches.add(term);
+		} else {
+			LastFiveSearches.add(term);
+		}
+	}
 
 	@SuppressWarnings("serial")
 	private static ArrayList<Menu> SetMenuItems() {
@@ -23,7 +35,6 @@ public class Main {
 				add(new MenuOneOptionOne());
 				add(new MenuOneOptionTwo());
 				add(new MenuOneOptionThree());
-
 			}
 		};
 		menuOne.setMenuItems(menuOneMenuItems);
@@ -52,8 +63,11 @@ public class Main {
 		Scanner Scan = new Scanner(System.in);
 		int userInput = 0;
 		while (userInput < 1 || userInput > UserMenus.size()) {
-
+			System.out.println();
+			System.out.println("====== Menu ======");
 			System.out.println("Παρακαλω επιλέξτε:");
+			System.out.println("======      ======");
+			System.out.println();
 
 			for (int i = 0; i < UserMenus.size(); i++) {
 				System.out.println(MessageFormat.format("{0}. {1}", i + 1, UserMenus.get(i).getTitle()));
@@ -80,7 +94,8 @@ public class Main {
 						}
 						switch (menuOneSubmenuChoise) {
 						case 1:
-							menuOne.getMenuItems().get(0).userQuestions(Scan);
+							String searchTerm = menuOne.getMenuItems().get(0).userQuestions(Scan);
+							addLocalStorage(searchTerm);
 							userInput = 0;
 							break;
 						case 2:
@@ -88,7 +103,7 @@ public class Main {
 							userInput = 0;
 							break;
 						case 3:
-							menuOne.getMenuItems().get(2).userQuestions(Scan);
+							menuOne.getMenuItems().get(2).userQuestions(LastFiveSearches);
 							userInput = 0;
 							break;
 						}
@@ -127,8 +142,8 @@ public class Main {
 					}
 				}
 			} catch (Exception e) {
+
 				System.out.println(e.getMessage());
-				System.out.println("Κάτι πήγε στραβά");
 				System.exit(1);
 				Scan.close();
 			}

@@ -11,7 +11,7 @@ public class MenuOneOptionTwo extends MenuItem {
 	}
 
 	@Override
-	public void userQuestions(Scanner scan) {
+	public String userQuestions(Scanner scan) throws Exception {
 
 		System.out.println("Παρακαλώ εισάγετε το ID του τόμου:");
 		String volumeId = scan.next();
@@ -21,8 +21,9 @@ public class MenuOneOptionTwo extends MenuItem {
 			Item volumeInfo = api.GetVolumeInfo(volumeId);
 			System.out.println("");
 			System.out.println(volumeInfo.toString());
+			return null;
 		} catch (Exception e) {
-			//
+			throw new Exception(e.getMessage());
 		}
 	}
 

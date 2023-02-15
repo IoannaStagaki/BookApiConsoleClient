@@ -13,7 +13,7 @@ public class MenuTwoOptionThree extends MenuItem {
 	}
 
 	@Override
-	public void userQuestions(Scanner scan) {
+	public String userQuestions(Scanner scan) throws Exception {
 		System.out.println("\tΠαρακαλώ εισάγετε το ID του χρήστη που επιθυμείτε να δείτε τα δημόσια ράφια.");
 		System.out.println("\tΑλλιώς αφήστε κενό και θα βάλουμε εμείς τον χρήστη με αριθμο: " + this.DefaultUserId);
 		String userId = scan.next();
@@ -31,9 +31,10 @@ public class MenuTwoOptionThree extends MenuItem {
 				System.out.println(item.toString());
 				System.out.println();
 			});
+			return null;
 
 		} catch (Exception e) {
-
+			throw new Exception(e.getMessage());
 		}
 
 	}
