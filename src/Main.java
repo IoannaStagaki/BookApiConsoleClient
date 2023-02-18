@@ -1,8 +1,10 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
 
 import models.Menu;
 import models.MenuItem;
@@ -58,9 +60,10 @@ public class Main {
 		return UserMenus;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		ArrayList<Menu> UserMenus = SetMenuItems();
-		Scanner Scan = new Scanner(System.in);
+//		Scanner Scan = new Scanner(System.in);
+		BufferedReader Scan = new BufferedReader(new InputStreamReader(System.in));
 		int userInput = 0;
 		while (userInput < 1 || userInput > UserMenus.size()) {
 			System.out.println();
@@ -74,7 +77,7 @@ public class Main {
 			}
 
 			try {
-				userInput = Scan.nextInt();
+				userInput = Integer.parseInt(Scan.readLine());
 				if (userInput < 1 || userInput > UserMenus.size()) {
 					System.out.println(
 							MessageFormat.format("Παρακαλώ βάλτε μια τιμή μεταξύ 1 και {0}", UserMenus.size()));
@@ -87,7 +90,7 @@ public class Main {
 							System.out.println(MessageFormat.format("\t{0}. {1}", i + 1,
 									menuOne.getMenuItems().get(i).getTitle()));
 						}
-						int menuOneSubmenuChoise = Scan.nextInt();
+						int menuOneSubmenuChoise = Integer.parseInt(Scan.readLine());
 						if (menuOneSubmenuChoise < 1 || menuOneSubmenuChoise > menuOne.getMenuItems().size()) {
 							System.out.println(MessageFormat.format("Παρακαλώ βάλτε μια τιμή μεταξύ 1 και {0}",
 									menuOne.getMenuItems().size()));
@@ -115,7 +118,7 @@ public class Main {
 							System.out.println(MessageFormat.format("\t{0}. {1}", i + 1,
 									menuTwo.getMenuItems().get(i).getTitle()));
 						}
-						int menuTwoSubmenuChoise = Scan.nextInt();
+						int menuTwoSubmenuChoise = Integer.parseInt(Scan.readLine());
 						if (menuTwoSubmenuChoise < 1 || menuTwoSubmenuChoise > menuTwo.getMenuItems().size()) {
 							System.out.println(MessageFormat.format("Παρακαλώ βάλτε μια τιμή μεταξύ 1 και {0}",
 									menuTwo.getMenuItems().size()));
@@ -134,6 +137,7 @@ public class Main {
 							userInput = 0;
 							break;
 						}
+						break;
 					case 3:
 						System.out.println("Ευχαριστούμε αντίο");
 						Scan.close();
@@ -142,10 +146,7 @@ public class Main {
 					}
 				}
 			} catch (Exception e) {
-
-				System.out.println(e.getMessage());
-				System.exit(1);
-				Scan.close();
+				userInput = 0;
 			}
 
 		}

@@ -1,6 +1,6 @@
 package models;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
 
 import api.ApiCalls;
 
@@ -13,15 +13,15 @@ public class MenuTwoOptionTwo extends MenuItem {
 	}
 
 	@Override
-	public String userQuestions(Scanner scan) throws Exception {
+	public String userQuestions(BufferedReader scan) throws Exception {
 		System.out.println("\tΠαρακαλώ εισάγετε το ID του χρήστη που επιθυμείτε να δείτε τα δημόσια ράφια.");
 		System.out.println("\tΑλλιώς αφήστε κενό και θα βάλουμε εμείς τον χρήστη με αριθμο: " + this.DefaultUserId);
-		String userId = scan.nextLine();
-		if (userId == null || userId == "") {
+		String userId = scan.readLine();
+		if (userId.equals(null) || userId.equals("")) {
 			userId = DefaultUserId;
 		}
 		System.out.println("\tΠαρακαλώ εισάγετε το ID του δημοσίου ραφιού:");
-		String bookshelveId = scan.nextLine();
+		String bookshelveId = scan.readLine();
 		ApiCalls api = new ApiCalls();
 
 		try {

@@ -1,6 +1,6 @@
 package models;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
 
 import api.ApiCalls;
 
@@ -14,11 +14,11 @@ public class MenuTwoOptionOne extends MenuItem {
 	private String DefaultUserId = "102701940585560677579";
 
 	@Override
-	public String userQuestions(Scanner scan) throws Exception {
+	public String userQuestions(BufferedReader scan) throws Exception {
 		System.out.println("\tΠαρακαλώ εισάγετε το ID του χρήστη που επιθυμείτε να δείτε τα δημόσια ράφια.");
 		System.out.println("\tΑλλιώς αφήστε κενό και θα βάλουμε εμείς τον χρήστη με αριθμο: " + this.DefaultUserId);
-		String userId = scan.next();
-		if (userId == null || userId=="") { 
+		String userId = scan.readLine();
+		if (userId.equals(null) || userId.equals("")) {
 			userId = DefaultUserId;
 		}
 		ApiCalls api = new ApiCalls();

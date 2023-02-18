@@ -1,6 +1,6 @@
 package models;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
 
 import api.ApiCalls;
 
@@ -11,10 +11,10 @@ public class MenuOneOptionTwo extends MenuItem {
 	}
 
 	@Override
-	public String userQuestions(Scanner scan) throws Exception {
+	public String userQuestions(BufferedReader scan) throws Exception {
 
 		System.out.println("Παρακαλώ εισάγετε το ID του τόμου:");
-		String volumeId = scan.next();
+		String volumeId = scan.readLine();
 		
 		ApiCalls api = new ApiCalls();
 		try {
