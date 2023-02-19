@@ -9,13 +9,13 @@ public class MenuTwoOptionThree extends MenuItem {
 	private String DefaultUserId = "102701940585560677579";
 
 	public MenuTwoOptionThree() {
-		this.setTitle("Ανάκτηση περιεχομένων δημόσιου ραφιού χρήστη");
+		this.setTitle("Ανάκτηση περιεχομένων δημόσιου ραφιού άλλου χρήστη");
 	}
 
 	@Override
 	public String userQuestions(BufferedReader scan) throws Exception {
 		System.out.println("\tΠαρακαλώ εισάγετε το ID του χρήστη που επιθυμείτε να δείτε τα δημόσια ράφια.");
-		System.out.println("\tΑλλιώς αφήστε κενό και θα βάλουμε εμείς τον χρήστη με αριθμο: " + this.DefaultUserId);
+		System.out.println("\tΑλλιώς αφήστε 'ENTER' και θα μπεί αυτόματα ο χρήστη με αριθμό: " + this.DefaultUserId);
 		String userId = scan.readLine();
 		if (userId.equals(null) || userId.equals("")) {
 			userId = DefaultUserId;

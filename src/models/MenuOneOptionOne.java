@@ -120,7 +120,8 @@ public class MenuOneOptionOne extends MenuItem {
 			typeOfPrint = this.printType.get(typeOfPrintChoise);
 		}
 
-		int projectionUserChoise = this.validateAndReturnInput(this.projection,"Επιθυμείτε προβολή όλων των πεδίων ή μερικών;", scan);
+		int projectionUserChoise = this.validateAndReturnInput(this.projection,
+				"Τι είδους προβολή πεδίων επιθυμείτε;", scan);
 		isLastIndex = projectionUserChoise + 1 == this.projection.size();
 		if (!isLastIndex) {
 			projectionType = this.projection.get(projectionUserChoise);
